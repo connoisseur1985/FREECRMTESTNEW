@@ -3,13 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.qa.crm.testpages.FreeCRMEntryPageTest">
+      <class name="com.qa.crm.testpages.RegisterPageTest">
         <methods>
-          <include name="tearDown"/>
-          <include name="verifyLogoLink"/>
           <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="fillRegistrationForm" invocation-numbers="0"/>
         </methods>
-      </class> <!-- com.qa.crm.testpages.FreeCRMEntryPageTest -->
+      </class> <!-- com.qa.crm.testpages.RegisterPageTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

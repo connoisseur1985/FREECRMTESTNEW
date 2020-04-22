@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -52,11 +53,11 @@ public class TestBase {
     	else if(prop.getProperty("browser").equals("ie")) 
 		{			
 			System.setProperty("webdriver.ie.driver","F:\\Downloads Softwares\\IEDriverServer.exe");
-			
+			driver = new InternetExplorerDriver();
 		}else if(prop.getProperty("browser").equals("opera")) 
 		{			
 			System.setProperty("webdriver.opera.driver","F:\\Downloads Softwares\\operadriver.exe");
-			
+			driver = new OperaDriver();
 		} 
 			
 		
