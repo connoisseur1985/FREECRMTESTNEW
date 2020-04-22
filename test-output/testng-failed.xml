@@ -10,8 +10,7 @@
         <methods>
           <include name="setUp"/>
           <include name="tearDown"/>
-          <include name="verifyTitleTest"/>
-          <include name="fillRegistrationForm"/>
+          <include name="fillRegistrationForm" invocation-numbers="0 0 0 1 1 1"/>
         </methods>
       </class> <!-- com.qa.crm.testpages.RegisterPageTest -->
     </classes>
