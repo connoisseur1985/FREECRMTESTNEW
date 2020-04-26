@@ -24,9 +24,10 @@ public class TestBase {
 	
 	
 	public static WebDriver driver ;
-	static Properties prop;
+	public static Properties prop;
+	public static int waits_Value =200;
 	
-	static DesiredCapabilities caps;
+	//static DesiredCapabilities caps;
 	
 	public TestBase() throws IOException
 	{
@@ -38,7 +39,7 @@ public class TestBase {
 	}
 	
 	
-	public static void initialize()
+	public void initialize()
 	{
 		if(prop.getProperty("browser").equals("chrome")) 
 		{			
