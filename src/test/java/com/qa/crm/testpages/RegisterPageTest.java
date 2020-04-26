@@ -1,6 +1,7 @@
 package com.qa.crm.testpages;
 
 import java.io.IOException;
+
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
@@ -8,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.qa.crm.base.TestBase;
@@ -16,13 +18,16 @@ import com.qa.crm.pages.RegisterPage;
 import com.qa.crm.pages.SignUpPage;
 import com.qa.crm.utilities.Utilities;
 
+
+//@Listeners(com.qa.crm.utilities.TestListener.class)
+
 public class RegisterPageTest extends TestBase {
 	
 	
 	FreeCRMEntryPage freeCRMEntryPage;
 	RegisterPage registerPage;
 	SignUpPage signUpPage ;
-	
+	//Utilities utilities;
 	
 	
 	public RegisterPageTest() throws IOException 
@@ -39,14 +44,6 @@ public class RegisterPageTest extends TestBase {
 		registerPage = new RegisterPage();
 		signUpPage = new SignUpPage();
 		
-		
-		freeCRMEntryPage.clickOnSignUpLink();
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().pageLoadTimeout(20,TimeUnit.SECONDS);
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		
-		
 	}
 	
 	@AfterMethod
@@ -55,16 +52,23 @@ public class RegisterPageTest extends TestBase {
 		driver.quit();
 	}
 	
-	@Test(enabled=true)
+	@Test(priority=1,groups= {"regression","sanity"})
 	
-	public void verifyTitleTest() 
+	public void verifyTitleTest() throws IOException 
 	{
+		
+		registerPage = freeCRMEntryPage.clickOnSignUpLink();
+		
 		Assert.assertEquals(driver.getTitle(), "Cogmento CRM");
 	}
 	
-	@Test(dataProvider="data")
+	@Test(priority=2,dependsOnMethods="verifyTitleTest",dataProvider="data",groups= {"ddt","regression"})
 	public void fillRegistrationForm(String email, String country,String phone) throws IOException 
 	{
+	
+			
+		registerPage = freeCRMEntryPage.clickOnSignUpLink();
+		
 		registerPage.fillEmailTextBox(email);
 		
 		registerPage.selectCountry(country);
@@ -76,6 +80,9 @@ public class RegisterPageTest extends TestBase {
 		registerPage.clickOnCaptcha();
 		
 		signUpPage = registerPage.clickOnSignUpButton();
+		
+		Assert.assertEquals(driver.getCurrentUrl(), "https://ui.freecrm.com/");
+		
 		
 	}
 	

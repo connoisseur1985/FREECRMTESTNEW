@@ -41,7 +41,7 @@ public class RegisterPage extends TestBase{
 	
 	public void fillEmailTextBox(String email) 
 	{
-		WebDriverWait wait = new WebDriverWait(driver,20);
+		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='email']")));
 		
 		emailTextBox.click();
