@@ -1,12 +1,17 @@
 package com.qa.crm.testpages;
 
+import java.awt.AWTException;
 import java.io.IOException;
 
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -31,75 +36,72 @@ public class FreeCRMLoginPageTest extends TestBase{
 	}
 	
 	@BeforeMethod
-	public void setUp() throws IOException 
+	public void setUp() throws IOException, InterruptedException, AWTException 
 	{
-		System.out.println("Thread Id is Before Method: "+Thread.currentThread().getId());
 		initialize();
 		
 		freeCRMEntryPage = new FreeCRMEntryPage();
-		freeCRMLoginPage = new FreeCRMLoginPage();
-		homePage = new HomePage();	
+		
+		freeCRMLoginPage = freeCRMEntryPage.clickOnLoginButton();
+		
+		
+		
+		
 	}
 	
 	@Test(groups= {"sanity","regression"} ,priority =1)
-	public void verifyTitleTest() throws IOException 
+	public void verifyLoginTitleTest() throws IOException 
 	{
-		freeCRMLoginPage = freeCRMEntryPage.clickOnLoginButton();
 		
-		System.out.println("Thread Id is verifyTitle: "+Thread.currentThread().getId());
-		
-		
+		System.out.println("Thread is verify Login Title Test : "+Thread.currentThread().getId());
+				
 		Assert.assertEquals(driver.getTitle(),"Cogmento CRM");
+	
 	}
 	
-	@Test(dataProvider="getDataForValidLogin", groups= {"ddt","regression"},dependsOnMethods="verifyTitleTest",priority=3)
+	@Test(dataProvider="getDataForValidLogin", groups= {"ddt","regression"},dependsOnMethods="verifyLoginTitleTest",priority=3)
 	public void fillValidLoginDetails(String email,String password) throws IOException 
 	{
-		freeCRMLoginPage = freeCRMEntryPage.clickOnLoginButton();
-		
-		System.out.println("Thread Id is Valid Login: "+Thread.currentThread().getId());
-		try {
-		freeCRMLoginPage.enterEmailId(email);
-		freeCRMLoginPage.enterPassword(password);
-		homePage = freeCRMLoginPage.clickOnLoginButton();
+		System.out.println("Thread is Valid Login- "+Thread.currentThread().getId());
+		homePage = freeCRMLoginPage.validLogin(email, password);
 		
 		Assert.assertEquals(homePage.checkUserLabel(), "Ankur Mahajan");
-	}catch (Exception e) 
-		{
-		
-		//driver.quit();
-		}
-		}
+	}
 		
 		
 	
-	@Test(priority=2,dataProvider="getDataForInvalidLogin", groups= {"ddt","regression"},dependsOnMethods="verifyTitleTest")
+	@Test(priority=2,dataProvider="getDataForInvalidLogin", groups= {"ddt","regression"},dependsOnMethods="verifyLoginTitleTest")
 	public void fillInValidLoginDetails(String email,String password) throws IOException 
 	{
-		freeCRMLoginPage = freeCRMEntryPage.clickOnLoginButton();
-		System.out.println("Thread Id is Invalid Login: "+Thread.currentThread().getId());   
-		try {
-		freeCRMLoginPage.enterEmailId(email);
-		freeCRMLoginPage.enterPassword(password);
-		freeCRMLoginPage.clickOnLoginButton();
-		}catch(Exception e) 
-		{
-			//driver.quit();
-		}
+		System.out.println("Thread is Invalid login - "+Thread.currentThread().getId());
+		
+		freeCRMLoginPage.inValidLogin(email, password);
+		
 		Assert.assertTrue(freeCRMLoginPage.checkVisibilityOfSomethingWrong());
 	}
-
+	
 	@AfterMethod
+	public void tear() {
+		
+		driver.close();
+	}
+
+	@AfterTest
 	public void tearDown() 
 	{
-		System.out.println("Thread Id is After Mthod: "+Thread.currentThread().getId());
-		driver.quit();
+		driver.quit();SessionId session = ((RemoteWebDriver)driver).getSessionId();
+		
+		if(session!= null)
+			{
+			driver.quit();
+			}
+		
 	}
 	
 	@DataProvider
 	public Object[][] getDataForValidLogin() throws IOException 
 	{
-		System.out.println("Thread Id is Data Provider Valid Login: "+Thread.currentThread().getName()+" "+Thread.currentThread().getId());
+		//System.out.println("Thread Id is Data Provider Valid Login: "+Thread.currentThread().getName()+" "+Thread.currentThread().getId());
 		Object[][] obj = Utilities.getExcelDataForValidLogin();
 		
 		return obj;
@@ -110,7 +112,7 @@ public class FreeCRMLoginPageTest extends TestBase{
 	public Object[][] getDataForInvalidLogin() throws IOException 
 	{
 		
-		System.out.println("Thread Id is Data Provider Invalid Login: "+Thread.currentThread().getId());
+		//System.out.println("Thread Id is Data Provider Invalid Login: "+Thread.currentThread().getId());
 		Object[][] obj = Utilities.getExcelDataForInValidLogin();
 		
 		

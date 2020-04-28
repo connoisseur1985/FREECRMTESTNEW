@@ -50,35 +50,34 @@ public class FreeCRMLoginPage extends TestBase {
 			return false;
 	}
 		
-	public void enterEmailId(String email) 
+	public HomePage validLogin(String email, String password) throws IOException 
 	{
 		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
 		
 		wait.until(ExpectedConditions.visibilityOf(emailTextBox));
 		
-		emailTextBox.click();
 		emailTextBox.sendKeys(email);
-	}
-	
-	public void enterPassword(String password) 
-	{
-		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
-		
-		wait.until(ExpectedConditions.visibilityOf(passwordTextBox));
-		
-		passwordTextBox.click();
 		passwordTextBox.sendKeys(password);
-	}
-	
-	public HomePage clickOnLoginButton() throws IOException 
-	{
-		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
-		
-		wait.until(ExpectedConditions.visibilityOf(loginButton));
-		
 		loginButton.click();
 		
 		return new HomePage();
+		
 	}
+	
+	public void inValidLogin(String email, String password) throws IOException 
+	{
+		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
+		
+		wait.until(ExpectedConditions.visibilityOf(emailTextBox));
+		
+		emailTextBox.sendKeys(email);
+		passwordTextBox.sendKeys(password);
+		loginButton.click();
+		
+		
+		//return new HomePage();
+		
+	}
+	
 	
 }

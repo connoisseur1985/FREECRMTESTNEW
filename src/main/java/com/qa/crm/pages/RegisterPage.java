@@ -24,7 +24,7 @@ public class RegisterPage extends TestBase{
 	@FindBy(css = "input[name='email']")
 	WebElement emailTextBox;
 	
-	@FindBy(css="input[class='search']")
+	@FindBy(css="div[id='country']")
 	WebElement countryDropDown;
 	
 	@FindBy(css="input[name='phone']")
@@ -39,57 +39,46 @@ public class RegisterPage extends TestBase{
 	@FindBy(css="button[name='action']")
 	WebElement signUpButton;
 	
-	public void fillEmailTextBox(String email) 
+	
+	
+	public SignUpPage fillRegistrationForm(String email,String country, String number) throws IOException 
 	{
 		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='email']")));
 		
-		emailTextBox.click();
 		emailTextBox.sendKeys(email);
+		selectCountry(country);
+		phoneTextBox.sendKeys(number);
+		phoneTextBox.click();
+		termsAndConditionsCheckBox.click();
+		signUpButton.click();
 		
+		return new SignUpPage();
+		//captchaCheckBox.click();
+	
 	}
 	
 	public void selectCountry(String country) 
 	{
 		countryDropDown.click();
 		
-		List<WebElement> list = driver.findElements(By.xpath("div[@class='menu transition visible']/div"));
+		List<WebElement> list = driver.findElements(By.xpath("//div[@id='country']/div[@class='menu transition visible']/div"));
 		
 		Iterator<WebElement> it = list.iterator();
 		
 		while(it.hasNext()) 
 		{
-			if(it.next().getText().equalsIgnoreCase(country)) 
+			WebElement countr = it.next();
+			String coun = countr.getText();
+			
+			System.out.println(coun);
+			if(coun.equalsIgnoreCase(country)) 
 			{
-				it.next().click();
+				countr.click();
 				break;
 			}
 		}
 		
 	}
 	
-	public void fillInPhoneNumber(String number) 
-	{
-		phoneTextBox.click();
-		phoneTextBox.sendKeys(number);
-	}
-
-	public void clickOnTermsCheckBox() 
-	{
-		termsAndConditionsCheckBox.click();
-	}
-	
-	public void clickOnCaptcha() 
-	{
-		captchaCheckBox.click();
-		
-	}
-	
-	public SignUpPage clickOnSignUpButton() throws IOException 
-	{
-		signUpButton.click();
-		
-		return new SignUpPage();
-	}
-
 }
