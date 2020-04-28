@@ -10,12 +10,9 @@ import com.qa.crm.base.TestBase;
 
 
 
-public class TestListener implements ITestListener{
+public class TestListener  implements ITestListener{
 	
 	
-
-
-		
 	public void onStart(ITestContext context) {
 		
 		System.out.println("Test Start");
@@ -65,7 +62,7 @@ public class TestListener implements ITestListener{
 			e.printStackTrace();
 		}
 
-		 //driver.close();
+		 //driver.quit();
 		 
 	}
 	 
@@ -85,7 +82,8 @@ public class TestListener implements ITestListener{
 		 
 
 	 }
-	 
+
+
 	 
 	 
 	 

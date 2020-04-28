@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel ="tests" thread-count="3" >
+<suite name="Suite" parallel ="methods" thread-count="3" >
 
 <listeners>
 
@@ -14,15 +14,17 @@
    
 
     <classes>
-      
-      
-    <class name="com.qa.crm.testpages.FreeCRMEntryPageTest"/>
-    <class name="com.qa.crm.testpages.RegisterPageTest"  /> 
-    <class  name ="com.qa.crm.testpages.FreeCRMLoginPageTest" />
+
+	<class name="com.qa.crm.testpages.RegisterPageTest"  /> 
+	<class name="com.qa.crm.testpages.FreeCRMEntryPageTest"/>
+    <class  name ="com.qa.crm.testpages.FreeCRMLoginPageTest" />  
+    
+    
+   
     
       
     </classes>
 
 </test>  
 
-</suite> <!-- Suite -->
+</suite> 

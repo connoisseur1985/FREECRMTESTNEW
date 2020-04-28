@@ -1,13 +1,17 @@
 package com.qa.crm.testpages;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
+import java.awt.AWTException;
 import java.io.IOException;
 
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 import org.testng.Assert;
 
 
@@ -22,6 +26,8 @@ public class FreeCRMEntryPageTest extends TestBase{
 	
 	FreeCRMEntryPage freeCRMEntryPage;
 
+	FreeCRMEntryPage freeCRMEntryPage1;
+	
 	public FreeCRMEntryPageTest() throws IOException {
 		
 		super();
@@ -34,33 +40,47 @@ public class FreeCRMEntryPageTest extends TestBase{
 
 	}
 	
-	@AfterTest
-	public void endReport() 
-	{
-	
-	}
+
 	@BeforeMethod
-	public void setUp() throws IOException {
+	public void setUp() throws IOException, AWTException {
 		
-		System.out.println("Thread is Before Method : "+Thread.currentThread().getId());
+		
 		
 		initialize();
 		
 		freeCRMEntryPage = new FreeCRMEntryPage();
 
 	}
-	
+
 	@AfterMethod
+	public void tear() {
+		
+		driver.close();
+	}
+	
+	@AfterTest
 		public void tearDown() {
-		System.out.println("Thread is After : "+Thread.currentThread().getId());
-		driver.quit();
+		
+		SessionId session = ((RemoteWebDriver)driver).getSessionId();
+		
+		
+	
+		if(session!= null)
+			{
+			System.out.println("tearDown");
+			driver.quit();
+			}
+		
 	}
 	
 	@Test(priority=1,groups= {"regression","sanity"})
 	public void verifyLogoLink() throws IOException {
 		
+				
 		System.out.println("Thread is verify Logo Link : "+Thread.currentThread().getId());
-		freeCRMEntryPage = freeCRMEntryPage.clickOnLogoLink();
+		
+		
+		freeCRMEntryPage1 = freeCRMEntryPage.clickOnLogoLink();
 		
 		Assert.assertEquals(driver.getCurrentUrl(),"https://freecrm.co.in/");
 

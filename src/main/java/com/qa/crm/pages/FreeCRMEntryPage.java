@@ -43,17 +43,20 @@ public class FreeCRMEntryPage extends TestBase{
 	WebElement cogmentoNewMessageButton;
 
 	
-	public RegisterPage clickOnSignUpLink() throws IOException 
+	public RegisterPage clickOnSignUpLink() throws IOException, InterruptedException 
 	{
+		
+		Thread.sleep(5000);
+		
 		signUpLink.click();
+		
 		return new RegisterPage();
+		//return new RegisterPage();
 	}
 	
 
 	public FreeCRMEntryPage clickOnLogoLink() throws IOException 
 	{
-		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
-		wait.until(ExpectedConditions.elementToBeClickable(logoLink));
 		
 		logoLink.click();
 		
@@ -77,20 +80,22 @@ public class FreeCRMEntryPage extends TestBase{
 	
 
 	
-	public FreeCRMLoginPage clickOnLoginButton() throws IOException 
+	public FreeCRMLoginPage clickOnLoginButton() throws IOException, InterruptedException 
 	{
-		WebDriverWait wait = new WebDriverWait(driver,waits_Value);
-		wait.until(ExpectedConditions.visibilityOf(loginButton));
-		
+	
+		Thread.sleep(5000);
 		loginButton.click();
+		
 		return new FreeCRMLoginPage();
 	}
 	
 
 	
-	public void clickOnSignUpButton() 
+	public RegisterPage clickOnSignUpButton() throws IOException 
 	{
 		signUpButton.click();
+		
+		return new RegisterPage();
 	}
 	
 	public void clickOnCogmentoButton() 
