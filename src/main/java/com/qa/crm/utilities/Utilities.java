@@ -62,13 +62,14 @@ public class Utilities extends TestBase{
 		
 	}
 	
-	public static void getScreenShot() throws IOException 
+	public static String getScreenShot() throws IOException 
 	{
 		String timestamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(java.util.Calendar.getInstance().getTime());
 		
 		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File("C:\\Users\\ASUS\\eclipse-workspace\\FREECRMTESTNEW\\src\\main\\java\\com\\qa\\crm\\testoutput\\"+timestamp+".png"));
-		
+		String path = System.getProperty("user.dir")+"\\src\\main\\java\\com\\qa\\crm\\testoutput\\"+timestamp+".png";
+		FileUtils.copyFile(src, new File(path));
+		return path;
 	}
 
 	public static Object[][] getExcelDataForValidLogin() throws IOException {
