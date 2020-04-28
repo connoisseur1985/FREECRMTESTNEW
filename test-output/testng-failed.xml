@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite thread-count="2" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="methods">
+<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
   <listeners>
     <listener class-name="com.qa.crm.utilities.TestListener"/>
     <listener class-name="com.qa.crm.utilities.AnalyzerTransformer"/>
   </listeners>
-  <test thread-count="2" name="Test(failed)" parallel="methods">
+  <test thread-count="3" name="Test(failed)">
     <classes>
       <class name="com.qa.crm.testpages.RegisterPageTest">
         <methods>
@@ -16,16 +16,6 @@
           <include name="verifyRegistration" invocation-numbers="0 0 0 1 1 1"/>
         </methods>
       </class> <!-- com.qa.crm.testpages.RegisterPageTest -->
-      <class name="com.qa.crm.testpages.FreeCRMLoginPageTest">
-        <methods>
-          <include name="fillValidLoginDetails"/>
-          <include name="fillInValidLoginDetails"/>
-          <include name="verifyLoginTitleTest"/>
-          <include name="tearDown"/>
-          <include name="tear"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- com.qa.crm.testpages.FreeCRMLoginPageTest -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

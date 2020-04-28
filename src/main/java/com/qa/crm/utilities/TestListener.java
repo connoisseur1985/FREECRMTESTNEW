@@ -7,31 +7,46 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import com.qa.crm.base.TestBase;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 
 
 
 public class TestListener  implements ITestListener{
 	
-	
+		public ExtentReports report;
+		public 	ExtentTest logger;
+		
 	public void onStart(ITestContext context) {
 		
 		System.out.println("Test Start");
 		System.out.println(context.getName());
-
+		
+		report = new ExtentReports("C:\\Users\\ASUS\\eclipse-workspace\\FREECRMTESTNEW\\src\\main\\java\\com\\qa\\crm\\testoutput\\extent.html");
+		logger = report.startTest("FreeCRMTest");
 	}
 
 	 public void onTestFailure(ITestResult result) {
 		 
 		 System.out.println("Test Fail");
 		 
+		 
 		 try {
-			System.out.println(result.getInstanceName());
-			System.out.println(result.getMethod().getMethodName());
-			Utilities.getScreenShot();
+			logger.log(LogStatus.FAIL, "Test Failed "+logger.addScreenCapture(Utilities.getScreenShot())+" "+result.getMethod().getMethodName()+" "+result.getThrowable());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		 
+//		 try {
+//			System.out.println(result.getInstanceName());
+//			System.out.println(result.getMethod().getMethodName());
+//			Utilities.getScreenShot();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		 
 		// driver.quit();
 
@@ -39,30 +54,14 @@ public class TestListener  implements ITestListener{
 	 
 	 public void onTestSuccess(ITestResult result) {
 
-		 System.out.println("Test Pass");
-			System.out.println(result.getInstanceName());
-			System.out.println(result.getMethod().getMethodName());
-			
-			//driver.quit();
-		 
-
+		 logger.log(LogStatus.PASS, "Test Passed "+result.getMethod().getMethodName());
 	}
 	 
 	 public void onTestSkipped(ITestResult result) {
 		 
-		 System.out.println("Test Skipped");
-		 
-		 
-		 try {
-				System.out.println(result.getInstanceName());
-				System.out.println(result.getMethod().getMethodName());
-			Utilities.getScreenShot();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 
-		 //driver.quit();
+		 logger.log(LogStatus.SKIP, "Test Skipped "+result.getMethod().getMethodName());
 		 
 	}
 	 
@@ -76,6 +75,10 @@ public class TestListener  implements ITestListener{
 	 
 	 public void onFinish(ITestContext context) {
  
+		 
+		 report.flush();
+		 report.endTest(logger);
+		
 		 System.out.println("All Test Finished");
 		 
 		 //driver.close();
